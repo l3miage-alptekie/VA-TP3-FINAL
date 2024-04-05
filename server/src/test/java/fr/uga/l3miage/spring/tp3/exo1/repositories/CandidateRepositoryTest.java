@@ -1,17 +1,24 @@
-package fr.uga.l3miage.spring.tp2.exo1.repositories;
+package fr.uga.l3miage.spring.tp3.exo1.repositories;
 
 import fr.uga.l3miage.spring.tp3.enums.TestCenterCode;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
 import fr.uga.l3miage.spring.tp3.models.TestCenterEntity;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith; // Import de ExtendWith
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension; // Import de SpringExtension
 
 import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 @AutoConfigureTestDatabase
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+        properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
+
 public class CandidateRepositoryTest {
     @Autowired
     private CandidateRepository candidateRepository;
@@ -29,12 +36,10 @@ public class CandidateRepositoryTest {
                 .code(TestCenterCode.valueOf("TOU"))
                 .build();
 
-
-
         CandidateEntity candidateEntity = CandidateEntity
                 .builder()
                 .firstname("code Gre")
-                .email("")
+                .email("") //il faut le mettre car cest not null
                 .testCenterEntity(testCenterEntity)
                 .build();
 
@@ -51,8 +56,6 @@ public class CandidateRepositoryTest {
         Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByTestCenterEntityCode(TestCenterCode.valueOf("GRE"));
 
         assertThat(candidateEntitiesResponses).hasSize(1);
-
-
 
 
     }
