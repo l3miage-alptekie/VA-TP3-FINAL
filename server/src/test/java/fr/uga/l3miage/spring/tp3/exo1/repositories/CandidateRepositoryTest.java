@@ -49,7 +49,7 @@ public class CandidateRepositoryTest {
         CandidateEntity candidateEntity2 = CandidateEntity
                 .builder()
                 .firstname("code Tou")
-                .email("")
+                .email("aaa@gmail.com")
                 .testCenterEntity(testCenterEntity2)
                 .build();
 
@@ -64,7 +64,5 @@ public class CandidateRepositoryTest {
 
 
     }
-
-
 
 }
