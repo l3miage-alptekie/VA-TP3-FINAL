@@ -6,11 +6,13 @@ import fr.uga.l3miage.spring.tp3.models.TestCenterEntity;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
-
+@AutoConfigureTestDatabase
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, properties = "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect")
 public class CandidateRepositoryTest {
-
     @Autowired
     private CandidateRepository candidateRepository;
 
