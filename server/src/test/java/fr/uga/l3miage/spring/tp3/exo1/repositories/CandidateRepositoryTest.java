@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -116,6 +117,54 @@ public class CandidateRepositoryTest {
         candidateEvaluationGridRepository.save(candidateEvaluationGridEntity3);
 
         Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByCandidateEvaluationGridEntitiesGradeLessThan(7.00);
+
+        assertThat(candidateEntitiesResponses).hasSize(2);
+
+
+    }
+
+
+    @Test
+    void findAllByHasExtraTimeFalseAndBirthDateBefore(){
+
+        CandidateEntity candidateEntity = CandidateEntity
+                .builder()
+                .firstname("Baran")
+                .email("d@gmail.com")
+                .hasExtraTime(false)
+                .birthDate(LocalDate.of(2002,3,2))
+                .build();
+
+        CandidateEntity candidateEntity1 = CandidateEntity
+                .builder()
+                .firstname("Eylul")
+                .email("a@gmail.com")
+                .hasExtraTime(false)
+                .birthDate(LocalDate.of(2001,10,15))
+                .build();
+
+        CandidateEntity candidateEntity2 = CandidateEntity
+                .builder()
+                .firstname("Poyraz")
+                .email("b@gmail.com")
+                .hasExtraTime(true)
+                .birthDate(LocalDate.of(2004,10,24))
+                .build();
+
+        CandidateEntity candidateEntity3 = CandidateEntity
+                .builder()
+                .firstname("Ayse")
+                .email("c@gmail.com")
+                .hasExtraTime(false)
+                .birthDate(LocalDate.of(2008,3,2))
+                .build();
+
+        candidateRepository.save(candidateEntity);
+        candidateRepository.save(candidateEntity1);
+        candidateRepository.save(candidateEntity2);
+        candidateRepository.save(candidateEntity3);
+
+        Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByHasExtraTimeFalseAndBirthDateBefore(LocalDate.of(2005,1,1));
 
         assertThat(candidateEntitiesResponses).hasSize(2);
 
