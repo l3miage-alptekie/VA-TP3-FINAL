@@ -2,7 +2,9 @@ package fr.uga.l3miage.spring.tp3.exo1.repositories;
 
 import fr.uga.l3miage.spring.tp3.enums.TestCenterCode;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
+import fr.uga.l3miage.spring.tp3.models.CandidateEvaluationGridEntity;
 import fr.uga.l3miage.spring.tp3.models.TestCenterEntity;
+import fr.uga.l3miage.spring.tp3.repositories.CandidateEvaluationGridRepository;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
 import fr.uga.l3miage.spring.tp3.repositories.TestCenterRepository;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,9 @@ public class CandidateRepositoryTest {
     private CandidateRepository candidateRepository;
     @Autowired
     private TestCenterRepository testCenterRepository;
+    @Autowired
+    private CandidateEvaluationGridRepository candidateEvaluationGridRepository;
+
 
     @Test
     void testFindAllByTestCenterEntityCode(){
@@ -61,6 +66,58 @@ public class CandidateRepositoryTest {
         Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByTestCenterEntityCode(TestCenterCode.GRE);
 
         assertThat(candidateEntitiesResponses).hasSize(1);
+
+    }
+
+    @Test
+    void findAllByCandidateEvaluationGridEntitiesGradeLessThan(){
+
+        CandidateEntity candidateEntity = CandidateEntity
+                .builder()
+                .firstname("code Gre")
+                .email("bbb@gmail.com") //il faut le mettre car cest not null
+                .build();
+
+        CandidateEntity candidateEntity2 = CandidateEntity
+                .builder()
+                .firstname("code Tou")
+                .email("aaa@gmail.com")
+                .build();
+
+        CandidateEntity candidateEntity3 = CandidateEntity
+                .builder()
+                .firstname("code Gre")
+                .email("ccc@gmail.com")
+                .build();
+
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity=CandidateEvaluationGridEntity
+                .builder()
+                .grade(5.00)
+                .candidateEntity(candidateEntity)
+                .build();
+
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity2=CandidateEvaluationGridEntity
+                .builder()
+                .grade(5.00)
+                .candidateEntity(candidateEntity2)
+                .build();
+
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity3=CandidateEvaluationGridEntity
+                .builder()
+                .grade(7.00)
+                .candidateEntity(candidateEntity)
+                .build();
+
+        candidateRepository.save(candidateEntity);
+        candidateRepository.save(candidateEntity2);
+        candidateRepository.save(candidateEntity3);
+        candidateEvaluationGridRepository.save(candidateEvaluationGridEntity);
+        candidateEvaluationGridRepository.save(candidateEvaluationGridEntity2);
+        candidateEvaluationGridRepository.save(candidateEvaluationGridEntity3);
+
+        Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByCandidateEvaluationGridEntitiesGradeLessThan(7.00);
+
+        assertThat(candidateEntitiesResponses).hasSize(2);
 
 
     }
