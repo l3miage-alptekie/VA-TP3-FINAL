@@ -16,7 +16,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -27,9 +28,28 @@ public class CandidateComponentTest {
     @Autowired
     private CandidateComponent candidateComponent;
     @MockBean
-    private CandidateEvaluationGridRepository candidateEvaluationGridRepository;
-    @MockBean
     private CandidateRepository candidateRepository;
+    @MockBean
+    private CandidateEvaluationGridRepository candidateEvaluationGridRepository;
+
+    @Test
+    void getCandidatByIdTest(){
+
+        //Given
+        CandidateEntity candidateEntity = CandidateEntity
+                .builder()
+                .candidateEvaluationGridEntities(Set.of())
+                .birthDate(LocalDate.of(2001,10,15))
+                .hasExtraTime(true)
+                .build();
+        when(candidateRepository.findById(anyLong())).thenReturn(Optional.of(candidateEntity));
+
+        // when - then
+        assertDoesNotThrow(()->candidateComponent.getCandidatById(1L));
+
+
+
+    }
 
     @Test
     void getAllEliminatedCandidateTest() {
