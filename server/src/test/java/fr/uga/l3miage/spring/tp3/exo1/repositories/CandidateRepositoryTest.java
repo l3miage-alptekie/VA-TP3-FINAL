@@ -33,7 +33,7 @@ public class CandidateRepositoryTest {
 
 
     @Test
-    void testFindAllByTestCenterEntityCode(){
+    void testFindAllByTestCenterEntityCode() {
 
         TestCenterEntity testCenterEntity = TestCenterEntity
                 .builder()
@@ -71,7 +71,7 @@ public class CandidateRepositoryTest {
     }
 
     @Test
-    void findAllByCandidateEvaluationGridEntitiesGradeLessThan(){
+    void findAllByCandidateEvaluationGridEntitiesGradeLessThan() {
 
         CandidateEntity candidateEntity = CandidateEntity
                 .builder()
@@ -91,19 +91,19 @@ public class CandidateRepositoryTest {
                 .email("ccc@gmail.com")
                 .build();
 
-        CandidateEvaluationGridEntity candidateEvaluationGridEntity=CandidateEvaluationGridEntity
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity = CandidateEvaluationGridEntity
                 .builder()
                 .grade(5.00)
                 .candidateEntity(candidateEntity)
                 .build();
 
-        CandidateEvaluationGridEntity candidateEvaluationGridEntity2=CandidateEvaluationGridEntity
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity2 = CandidateEvaluationGridEntity
                 .builder()
                 .grade(5.00)
                 .candidateEntity(candidateEntity2)
                 .build();
 
-        CandidateEvaluationGridEntity candidateEvaluationGridEntity3=CandidateEvaluationGridEntity
+        CandidateEvaluationGridEntity candidateEvaluationGridEntity3 = CandidateEvaluationGridEntity
                 .builder()
                 .grade(7.00)
                 .candidateEntity(candidateEntity)
@@ -125,14 +125,14 @@ public class CandidateRepositoryTest {
 
 
     @Test
-    void findAllByHasExtraTimeFalseAndBirthDateBefore(){
+    void findAllByHasExtraTimeFalseAndBirthDateBefore() {
 
         CandidateEntity candidateEntity = CandidateEntity
                 .builder()
                 .firstname("Baran")
                 .email("d@gmail.com")
                 .hasExtraTime(false)
-                .birthDate(LocalDate.of(2002,3,2))
+                .birthDate(LocalDate.of(2002, 3, 2))
                 .build();
 
         CandidateEntity candidateEntity1 = CandidateEntity
@@ -140,7 +140,7 @@ public class CandidateRepositoryTest {
                 .firstname("Eylul")
                 .email("a@gmail.com")
                 .hasExtraTime(false)
-                .birthDate(LocalDate.of(2001,10,15))
+                .birthDate(LocalDate.of(2001, 10, 15))
                 .build();
 
         CandidateEntity candidateEntity2 = CandidateEntity
@@ -148,7 +148,7 @@ public class CandidateRepositoryTest {
                 .firstname("Poyraz")
                 .email("b@gmail.com")
                 .hasExtraTime(true)
-                .birthDate(LocalDate.of(2004,10,24))
+                .birthDate(LocalDate.of(2004, 10, 24))
                 .build();
 
         CandidateEntity candidateEntity3 = CandidateEntity
@@ -156,7 +156,7 @@ public class CandidateRepositoryTest {
                 .firstname("Ayse")
                 .email("c@gmail.com")
                 .hasExtraTime(false)
-                .birthDate(LocalDate.of(2008,3,2))
+                .birthDate(LocalDate.of(2008, 3, 2))
                 .build();
 
         candidateRepository.save(candidateEntity);
@@ -164,11 +164,19 @@ public class CandidateRepositoryTest {
         candidateRepository.save(candidateEntity2);
         candidateRepository.save(candidateEntity3);
 
-        Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByHasExtraTimeFalseAndBirthDateBefore(LocalDate.of(2005,1,1));
+        Set<CandidateEntity> candidateEntitiesResponses = candidateRepository.findAllByHasExtraTimeFalseAndBirthDateBefore(LocalDate.of(2005, 1, 1));
 
         assertThat(candidateEntitiesResponses).hasSize(2);
 
+        LocalDate secondCandidateBirthDate = candidateEntitiesResponses.stream()
+                .skip(1)
+                .findFirst()
+                .map(CandidateEntity::getBirthDate)
+                .orElse(null);
+
+        assertThat(secondCandidateBirthDate).isEqualTo(LocalDate.of(2001, 10, 15));
 
     }
+
 
 }
