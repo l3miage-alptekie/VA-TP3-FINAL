@@ -1,4 +1,4 @@
-package fr.uga.l3miage.spring.tp3.exo1.components;
+package fr.uga.l3miage.spring.tp3.components;
 
 import fr.uga.l3miage.spring.tp3.components.CandidateComponent;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
@@ -33,7 +33,7 @@ public class CandidateComponentTest {
     private CandidateEvaluationGridRepository candidateEvaluationGridRepository;
 
     @Test
-    void getCandidatByIdTest(){
+    void getCandidateByIdTest(){
 
         //Given
         CandidateEntity candidateEntity = CandidateEntity

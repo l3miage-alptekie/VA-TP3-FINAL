@@ -1,4 +1,4 @@
-package fr.uga.l3miage.spring.tp3.exo1.repositories;
+package fr.uga.l3miage.spring.tp3.repositories;
 
 import fr.uga.l3miage.spring.tp3.enums.TestCenterCode;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
